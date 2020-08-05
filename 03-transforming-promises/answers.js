@@ -8,7 +8,15 @@
  */
 function mapPromise(promise, transformer){
   return new Promise((resolve, reject) => {
-    /* IMPLEMENT ME!! */
+    promise.then(function(res){
+      try{
+        let good=transformer(res)
+        resolve(good)
+      }
+      catch(e){
+      reject(e)
+      }
+    }).catch(err=>reject(err))
   });
 }
 
@@ -20,8 +28,22 @@ function mapPromise(promise, transformer){
  * @returns {Promise<number>}
  */
 function squarePromise(numberPromise){
-  return numberPromise
-    .then(/* IMPLEMENT ME! */);
+  return new Promise((resolve,reject)=>{
+    numberPromise.then(res=>{
+      if(Number.isInteger(res)){
+        resolve(res*res)
+      }
+      else{
+        if(isNaN(parseInt(res))){
+          reject(`Cannot convert '${res}' to a number!`)
+        }
+        else{
+          resolve(parseInt(res)*parseInt(res))
+        }
+      }
+    }).catch(e=>reject(e))
+  })
+
 }
 
 /**
@@ -31,8 +53,21 @@ function squarePromise(numberPromise){
  * @returns {Promise<number>}
  */
 function squarePromiseOrZero(promise){
-  return squarePromise(promise)
-    .catch(/* IMPLEMENT ME! */);
+  return new Promise((resolve,reject)=>{
+    promise.then(res=>{
+      if(Number.isInteger(res)){
+        resolve(res*res)
+      }
+      else{
+        if(isNaN(parseInt(res))){
+          resolve(0)
+        }
+        else{
+          resolve(parseInt(res)*parseInt(res))
+        }
+      }
+    }).catch(e=>resolve(0))
+  })
 }
 
 /**
@@ -42,7 +77,9 @@ function squarePromiseOrZero(promise){
  * @returns {Promise}
  */
 function switcheroo(promise){
-  return promise.then(/* IMPLEMENT ME */);
+  return new Promise((resolve,reject)=>{
+    promise.then(res=>reject(res)).catch(err=>resolve(err))
+  })
 }
 
 /**

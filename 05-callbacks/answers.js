@@ -7,7 +7,7 @@ function passwordChecker(email, password){
   if(email === 'jeff@jeff.jeff' && password === 'jeff'){
     return {name: 'Jeff Jeffries', email: 'jeff@jeff.jeff'};
   }
-  return undefined;
+  setTimeout(()=>undefined,1000)
 }
 
 /**

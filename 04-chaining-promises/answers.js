@@ -32,7 +32,11 @@ function chainTwoAsyncProcesses(firstPromise, slowAsyncProcess){
  */
 function makeGetUserByIdWithOrganization(getUserById, getOrganizationById){
   return function getUserByIdWithOrganization(userId){
-    /* IMPLEMENT ME! */
+    getUserById(userId).then(function(res){
+      let user=res;
+      getOrganizationById(user.organizationId).then(function(res){user.organization=res})
+      return user
+    })
   };
 }
 
